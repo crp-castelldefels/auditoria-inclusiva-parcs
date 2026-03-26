@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auditoria de Parcs Inclusius</title>
+    <title>Auditoria urbana inclusiva - Primària</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        /* Estils personalitzats per a amagar la barra de desplaçament a les pestanyes */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
         
@@ -23,149 +22,174 @@
         }
     </style>
 </head>
-<body class="bg-stone-100 text-stone-800 font-sans min-h-screen flex flex-col">
+<body class="bg-sky-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
     <!-- Header -->
-    <header class="bg-teal-700 text-white shadow-md z-10 sticky top-0">
-        <div class="max-w-5xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-2">
-                <span class="text-3xl">🏞️</span>
+    <header class="bg-sky-700 text-white shadow-md z-10 sticky top-0">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3">
+                <span class="text-3xl">🕵️‍♀️</span>
                 <div>
-                    <h1 class="text-2xl font-bold tracking-tight">Auditoria Inclusiva</h1>
-                    <p class="text-teal-100 text-sm">Ajuntament de Castelldefels - Eina Educativa</p>
+                    <h1 class="text-2xl font-bold tracking-tight">Investiguem el parc</h1>
+                    <p class="text-sky-200 text-sm">Auditoria inclusiva per a escoles - Primària</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
-                <div id="cloudStatus" class="hidden sm:block text-xs text-teal-200 font-medium">☁️ Connectant...</div>
-                <div class="text-sm bg-teal-800 px-4 py-2 rounded-full font-semibold border border-teal-600">
-                    Índex Global: <span id="globalScoreHeader">0</span>%
+                <div id="cloudStatus" class="hidden sm:block text-xs text-sky-200 font-medium">☁️ Connectant...</div>
+                <div class="text-sm bg-sky-800 px-4 py-2 rounded-md font-semibold border border-sky-600 shadow-inner">
+                    Puntuació del parc: <span id="globalScoreHeader">0</span>%
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Navigation -->
-    <nav class="bg-white border-b border-stone-200 shadow-sm sticky top-[88px] sm:top-[76px] z-10">
-        <div class="max-w-5xl mx-auto px-4 flex overflow-x-auto no-scrollbar">
-            <button onclick="switchTab('guia')" id="tab-btn-guia" class="tab-btn px-6 py-4 font-semibold text-teal-700 border-b-2 border-teal-700 whitespace-nowrap transition-colors">📘 1. Guia d'Inclusivitat</button>
-            <button onclick="switchTab('auditoria')" id="tab-btn-auditoria" class="tab-btn px-6 py-4 font-medium text-stone-500 hover:text-teal-600 border-b-2 border-transparent hover:border-teal-300 whitespace-nowrap transition-colors">🕵️‍♀️ 2. Fes l'Auditoria</button>
-            <button onclick="switchTab('resultats')" id="tab-btn-resultats" class="tab-btn px-6 py-4 font-medium text-stone-500 hover:text-teal-600 border-b-2 border-transparent hover:border-teal-300 whitespace-nowrap transition-colors">📊 3. Resultats i Millora</button>
-            <button onclick="switchTab('professor')" id="tab-btn-professor" class="hidden tab-btn px-6 py-4 font-medium text-stone-500 hover:text-teal-600 border-b-2 border-transparent hover:border-teal-300 whitespace-nowrap transition-colors">👨‍🏫 4. Panell Docent</button>
+    <nav class="bg-white border-b border-slate-200 shadow-sm sticky top-[92px] sm:top-[76px] z-10">
+        <div class="max-w-6xl mx-auto px-4 flex overflow-x-auto no-scrollbar">
+            <button onclick="switchTab('guia')" id="tab-btn-guia" class="tab-btn px-6 py-4 font-semibold text-sky-700 border-b-2 border-sky-700 whitespace-nowrap transition-colors">🎯 1. La missió</button>
+            <button onclick="switchTab('auditoria')" id="tab-btn-auditoria" class="tab-btn px-6 py-4 font-medium text-slate-500 hover:text-sky-600 border-b-2 border-transparent hover:border-sky-300 whitespace-nowrap transition-colors">🔍 2. Investigació</button>
+            <button onclick="switchTab('resultats')" id="tab-btn-resultats" class="tab-btn px-6 py-4 font-medium text-slate-500 hover:text-sky-600 border-b-2 border-transparent hover:border-sky-300 whitespace-nowrap transition-colors">💡 3. La proposta</button>
+            <button onclick="switchTab('professor')" id="tab-btn-professor" class="hidden tab-btn px-6 py-4 font-medium text-slate-500 hover:text-sky-600 border-b-2 border-transparent hover:border-sky-300 whitespace-nowrap transition-colors">👨‍🏫 4. Panell docent</button>
         </div>
     </nav>
 
     <!-- Main Content Area -->
-    <main class="flex-grow max-w-5xl mx-auto w-full px-4 py-8">
+    <main class="flex-grow max-w-6xl mx-auto w-full px-4 py-8">
         
-        <!-- TAB 1: GUIA -->
+        <!-- TAB 1: LA MISSIÓ -->
         <section id="tab-guia" class="tab-content active">
-            <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 md:p-8">
-                <h2 class="text-2xl font-bold text-teal-800 mb-4">Què és un parc inclusiu?</h2>
-                <p class="mb-4 text-stone-600 leading-relaxed">Un parc inclusiu és un espai dissenyat perquè <strong>tots els infants</strong>, independentment de les seves capacitats físiques, sensorials o cognitives, puguin jugar junts. No es tracta només de posar una rampa, sinó de crear un entorn ric i accessible per a tothom.</p>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8">
+                <h2 class="text-3xl font-bold text-sky-900 mb-2">La nostra missió com a detectius</h2>
+                <p class="mb-6 text-slate-600 text-lg border-b pb-6">Un parc inclusiu és aquell on <strong>tots</strong> els nens i nenes, tinguin les capacitats que tinguin, poden jugar, divertir-se i sentir-se segurs. Ens ajudeu a comprovar si el vostre parc ho és?</p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                    <div class="bg-amber-50 p-5 rounded-lg border border-amber-100">
-                        <h3 class="font-bold text-amber-800 flex items-center gap-2 mb-2"><span>♿</span> Accessibilitat física</h3>
-                        <p class="text-sm text-stone-600">Terres de cautxú llisos, rampes amples per a cadires de rodes, jocs a l'alçada del terra i elements amb respatllers.</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Concept 1 -->
+                    <div class="bg-orange-50 p-6 rounded-xl border border-orange-100 flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-orange-100 text-orange-600 rounded-full flex items-center justify-center text-2xl shrink-0">♿</div>
+                        <div>
+                            <h3 class="font-bold text-orange-900 mb-2 text-xl">Rodes i mobilitat</h3>
+                            <p class="text-sm text-slate-700">Imagineu que aneu en cadira de rodes. Podríeu entrar al parc? Podríeu pujar a algun gronxador? Buscarem rampes, terres llisos i jocs adaptats.</p>
+                        </div>
                     </div>
-                    <div class="bg-blue-50 p-5 rounded-lg border border-blue-100">
-                        <h3 class="font-bold text-blue-800 flex items-center gap-2 mb-2"><span>👁️</span> Accessibilitat sensorial</h3>
-                        <p class="text-sm text-stone-600">Colors contrastats per a infants amb baixa visió, panells tàctils, jocs musicals i zones de la calma lluny del soroll.</p>
+
+                    <!-- Concept 2 -->
+                    <div class="bg-green-50 p-6 rounded-xl border border-green-100 flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-green-100 text-green-600 rounded-full flex items-center justify-center text-2xl shrink-0">👀</div>
+                        <div>
+                            <h3 class="font-bold text-green-900 mb-2 text-xl">Els sentits</h3>
+                            <p class="text-sm text-slate-700">Hi ha nens que hi veuen poc i necessiten colors cridaners o jocs musicals. D'altres necessiten un "racó de la calma" si hi ha molt soroll. El parc ho té en compte?</p>
+                        </div>
                     </div>
-                    <div class="bg-emerald-50 p-5 rounded-lg border border-emerald-100">
-                        <h3 class="font-bold text-emerald-800 flex items-center gap-2 mb-2"><span>🧠</span> Accessibilitat cognitiva</h3>
-                        <p class="text-sm text-stone-600">Senyalització clara amb pictogrames, rutes fàcils d'entendre i espais tancats que donin seguretat.</p>
+                    
+                    <!-- Concept 3 -->
+                    <div class="bg-purple-50 p-6 rounded-xl border border-purple-100 flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center text-2xl shrink-0">🧠</div>
+                        <div>
+                            <h3 class="font-bold text-purple-900 mb-2 text-xl">Entendre el parc</h3>
+                            <p class="text-sm text-slate-700">Tots hem de poder entendre les normes del parc. Buscarem si hi ha cartells amb dibuixos clars (pictogrames) perquè fins i tot els que no saben llegir sàpiguen què fer.</p>
+                        </div>
                     </div>
-                    <div class="bg-purple-50 p-5 rounded-lg border border-purple-100">
-                        <h3 class="font-bold text-purple-800 flex items-center gap-2 mb-2"><span>🤝</span> Joc social</h3>
-                        <p class="text-sm text-stone-600">Gronxadors en forma de cistella per pujar-hi diversos infants alhora, estructures amples i jocs cooperatius.</p>
+                    
+                    <!-- Concept 4 -->
+                    <div class="bg-yellow-50 p-6 rounded-xl border border-yellow-100 flex gap-4 items-start">
+                        <div class="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-full flex items-center justify-center text-2xl shrink-0">🤝</div>
+                        <div>
+                            <h3 class="font-bold text-yellow-900 mb-2 text-xl">Jugar junts</h3>
+                            <p class="text-sm text-slate-700">Hi ha llocs on els petits i els grans puguin jugar sense fer-se mal? Hi ha jocs on hi cabem diversos amics alhora (com els gronxadors de cistella)?</p>
+                        </div>
                     </div>
                 </div>
 
-                <div class="mt-8 text-center">
-                    <button onclick="switchTab('auditoria')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors">
-                        Començar l'Auditoria ➡️
+                <div class="mt-10 p-6 bg-slate-100 rounded-xl border border-slate-200 text-center">
+                    <h4 class="font-bold text-slate-800 mb-2">Prepareu-vos per a la investigació!</h4>
+                    <p class="text-slate-600 mb-4">Aneu al parc, observeu bé cada racó i marqueu a la llista tot allò que trobeu. Sigueu molt sincers!</p>
+                    <button onclick="switchTab('auditoria')" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-8 rounded-full shadow transition-colors text-lg">
+                        Començar la investigació 🔍
                     </button>
                 </div>
             </div>
         </section>
 
-        <!-- TAB 2: AUDITORIA -->
+        <!-- TAB 2: INVESTIGACIÓ -->
         <section id="tab-auditoria" class="tab-content">
-            <div class="mb-6 bg-white p-4 rounded-xl shadow-sm border border-stone-200">
-                <h3 class="font-bold text-stone-800 mb-4 border-b pb-2">Dades de l'alumne/a</h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 mb-6">
+                <h3 class="font-bold text-slate-800 mb-4 border-b pb-2 text-lg">Dades de l'equip investigador</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div>
-                        <label for="studentNameInput" class="block text-sm font-bold text-stone-700 mb-2">Nom:</label>
-                        <input type="text" id="studentNameInput" class="w-full border-stone-300 border rounded-md p-2 focus:ring-teal-500 focus:border-teal-500" placeholder="Escriu el teu nom">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Nom de l'equip o classe:</label>
+                        <input type="text" id="studentNameInput" class="w-full border-slate-300 border rounded-md p-2.5 focus:ring-sky-500 focus:border-sky-500 bg-slate-50" placeholder="Ex: Els lleons / 4t B">
                     </div>
                     <div>
-                        <label for="studentSurnameInput" class="block text-sm font-bold text-stone-700 mb-2">Cognoms:</label>
-                        <input type="text" id="studentSurnameInput" class="w-full border-stone-300 border rounded-md p-2 focus:ring-teal-500 focus:border-teal-500" placeholder="Escriu els teus cognoms">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Nom de l'escola:</label>
+                        <input type="text" id="studentSchoolInput" class="w-full border-slate-300 border rounded-md p-2.5 focus:ring-sky-500 focus:border-sky-500 bg-slate-50" placeholder="Ex: Escola Lluís Vives">
                     </div>
                     <div>
-                        <label for="studentSchoolInput" class="block text-sm font-bold text-stone-700 mb-2">Centre educatiu:</label>
-                        <input type="text" id="studentSchoolInput" class="w-full border-stone-300 border rounded-md p-2 focus:ring-teal-500 focus:border-teal-500" placeholder="Ex: Escola Margalló">
+                        <label class="block text-sm font-bold text-slate-700 mb-1">Quin parc esteu vigilant?</label>
+                        <input type="text" id="parkNameInput" class="w-full border-slate-300 border rounded-md p-2.5 focus:ring-sky-500 focus:border-sky-500 bg-slate-50" placeholder="Ex: Parc del Castell">
                     </div>
                 </div>
             </div>
 
-            <div class="mb-6 bg-white p-4 rounded-xl shadow-sm border border-stone-200">
-                <label for="parkNameInput" class="block text-sm font-bold text-stone-700 mb-2">Nom i ubicació del parc a auditar:</label>
-                <input type="text" id="parkNameInput" class="w-full border-stone-300 border rounded-md p-3 focus:ring-teal-500 focus:border-teal-500" placeholder="Ex: Parc del Castell, Carrer ...">
+            <div class="mb-4 flex items-center justify-between">
+                <p class="text-slate-600 text-lg">Llegiu cada frase amb atenció. Marqueu la casella <strong class="text-sky-700">només si la resposta és SÍ</strong>.</p>
             </div>
-
-            <p class="text-stone-600 mb-6">Observeu l'entorn i marqueu les caselles d'aquells elements que el parc <strong>sí que té i estan en bon estat</strong>.</p>
             
             <div id="formContainer" class="space-y-6">
-                <!-- Els blocs es generen automàticament amb JavaScript -->
+                <!-- Generat dinàmicament per JS -->
             </div>
 
-            <div class="mt-8 text-center">
-                <button onclick="switchTab('resultats')" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors">
-                    Veure resultats 📊
+            <div class="mt-8 text-center bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <p class="text-slate-600 mb-4 font-medium text-lg">Molt bé, equip! Ara que ja ho heu revisat tot, anem a pensar com millorar el parc.</p>
+                <button onclick="switchTab('resultats')" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-8 rounded-full shadow transition-colors text-lg">
+                    Anar a la nostra idea 💡
                 </button>
             </div>
         </section>
 
-        <!-- TAB 3: RESULTATS I MILLORA -->
+        <!-- TAB 3: LA PROPOSTA -->
         <section id="tab-resultats" class="tab-content">
-            <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 md:p-8 mb-6">
-                <h2 class="text-2xl font-bold text-stone-800 mb-2">Informe de Diagnòstic</h2>
-                <p class="text-stone-500 mb-6 border-b pb-4">Anàlisi d'inclusivitat basada en les dades recollides.</p>
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 md:p-8 mb-6">
+                <div class="border-b border-slate-200 pb-4 mb-6">
+                    <h2 class="text-2xl font-bold text-slate-800 text-center">La nostra gran idea!</h2>
+                    <p class="text-slate-500 text-center">Proposta a l'Ajuntament de Castelldefels</p>
+                </div>
 
-                <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
-                    <!-- Chart Section -->
-                    <div class="w-full md:w-1/2 relative" style="min-height: 300px;">
-                        <canvas id="radarChart"></canvas>
+                <div class="flex flex-col lg:flex-row gap-8 items-start mb-10">
+                    <!-- Radar Chart (Simple per Primària) -->
+                    <div class="w-full lg:w-1/3 bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col items-center">
+                        <h3 class="font-bold text-slate-700 mb-2 text-center">Resultats del parc</h3>
+                        <div class="relative w-full aspect-square max-w-[250px]">
+                            <canvas id="radarChart"></canvas>
+                        </div>
+                        <div class="mt-4 text-center w-full bg-white p-3 rounded-lg border border-slate-200">
+                            <span class="text-sm text-slate-500 block mb-1">Nota del parc:</span>
+                            <span id="globalScoreDisplay" class="text-4xl font-black text-sky-600">0/10</span>
+                        </div>
                     </div>
 
-                    <!-- Summary Section -->
-                    <div class="w-full md:w-1/2 flex flex-col gap-4">
-                        <div class="bg-teal-50 rounded-xl p-6 border border-teal-100 text-center">
-                            <p class="text-teal-800 font-medium mb-1">Índex d'inclusivitat Global</p>
-                            <p id="globalScoreDisplay" class="text-5xl font-extrabold text-teal-700">0%</p>
+                    <!-- Formulari de Dossier (Simplificat) -->
+                    <div class="w-full lg:w-2/3 space-y-6">
+                        <div class="bg-orange-50 rounded-xl p-5 border border-orange-200">
+                            <h3 class="font-bold text-orange-900 mb-2 flex items-center gap-2 text-lg"><span>1️⃣</span> Què li falta al parc?</h3>
+                            <p class="text-sm text-orange-800 mb-3">Després de mirar-ho tot, quin és el problema més gran que heu trobat perquè jugui tothom?</p>
+                            <textarea id="diagnosiInput" class="w-full h-24 border border-orange-300 rounded-lg p-3 text-base focus:ring-orange-500 focus:border-orange-500 bg-white" placeholder="Ex: Hem vist que tot el terra és de sorra i una cadira de rodes no pot passar. A més, no hi ha jocs per als nens que no hi veuen..."></textarea>
                         </div>
-                        
-                        <!-- Weakest Point -->
-                        <div class="bg-rose-50 rounded-xl border border-rose-100 p-6 flex-grow">
-                            <h3 class="font-bold text-rose-900 mb-2 flex items-center gap-2"><span>⚠️</span> Àrea d'Urgència</h3>
-                            <p class="text-rose-800 text-sm mb-2">Segons les dades, la categoria amb pitjor puntuació és:</p>
-                            <p id="weakestCategoryDisplay" class="font-bold text-rose-900 text-lg bg-rose-200 inline-block px-3 py-1 rounded-md mb-4">-</p>
-                            
-                            <h4 class="font-bold text-stone-800 mt-4 mb-2">La nostra proposta de millora:</h4>
-                            <textarea id="propostaMillora" class="w-full h-32 border border-rose-200 rounded-md p-3 text-sm focus:ring-rose-500 focus:border-rose-500" placeholder="A partir de les dades obtingudes, què demanaríeu a l'Ajuntament de Castelldefels per millorar aquest parc?"></textarea>
+
+                        <div class="bg-sky-50 rounded-xl p-5 border border-sky-200">
+                            <h3 class="font-bold text-sky-900 mb-2 flex items-center gap-2 text-lg"><span>2️⃣</span> La nostra súper idea per a l'ajuntament</h3>
+                            <p class="text-sm text-sky-800 mb-3">Com a agents d'inclusivitat, quina millora exacta demaneu posar o canviar?</p>
+                            <textarea id="solucioInput" class="w-full h-32 border border-sky-300 rounded-lg p-3 text-base focus:ring-sky-500 focus:border-sky-500 bg-white" placeholder="Ex: Volem que feu un camí de goma fins als gronxadors. I que poseu un joc de pissarra amb relleu perquè els nens i nenes el puguin tocar..."></textarea>
                         </div>
                     </div>
                 </div>
             </div>
             
             <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4 pb-8">
-                 <button id="btnSaveCloud" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors flex items-center justify-center gap-2" onclick="window.saveToCloud()">
-                    <span>☁️</span> Desar al núvol
+                 <button id="btnSaveCloud" class="bg-sky-600 hover:bg-sky-700 text-white font-bold py-3 px-8 rounded-full shadow transition-colors flex items-center justify-center gap-2 text-lg" onclick="window.saveToCloud()">
+                    <span>✉️</span> Enviar idea a l'ajuntament
                 </button>
-                 <button class="bg-stone-800 hover:bg-stone-900 text-white font-bold py-3 px-8 rounded-full shadow-md transition-colors flex items-center justify-center gap-2" onclick="window.print()">
-                    <span>🖨️</span> Imprimir Informe de diagnòstic
+                 <button class="bg-slate-700 hover:bg-slate-800 text-white font-bold py-3 px-8 rounded-full shadow transition-colors flex items-center justify-center gap-2 text-lg" onclick="window.print()">
+                    <span>🖨️</span> Imprimir fitxa
                 </button>
             </div>
         </section>
@@ -174,33 +198,31 @@
         <section id="tab-professor" class="tab-content">
             <div class="mb-6 flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
                 <div>
-                    <h2 class="text-2xl font-bold text-stone-800 mb-2">Panell de professorat</h2>
-                    <p class="text-stone-600">Dades recollides de totes les auditories enviades pels alumnes.</p>
+                    <h2 class="text-2xl font-bold text-slate-800 mb-2">Administració docent (Primària)</h2>
+                    <p class="text-slate-600 text-sm">Auditories i propostes de millora enviades per les escoles.</p>
                 </div>
                 <div class="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
-                    <select id="schoolFilter" onchange="window.filterAudits()" class="w-full sm:w-auto border-stone-300 border rounded-md p-2 text-sm focus:ring-teal-500 focus:border-teal-500 bg-white">
-                        <option value="all">Tots els centres</option>
+                    <select id="schoolFilter" onchange="window.filterAudits()" class="w-full sm:w-auto border-slate-300 border rounded-md p-2 text-sm focus:ring-sky-500 focus:border-sky-500 bg-white shadow-sm">
+                        <option value="all">Totes les escoles</option>
                     </select>
-                    <button onclick="window.loadAllAudits()" class="w-full sm:w-auto bg-teal-100 text-teal-800 px-4 py-2 rounded-md text-sm font-bold hover:bg-teal-200 transition-colors shadow-sm flex items-center justify-center gap-2">
+                    <button onclick="window.loadAllAudits()" class="w-full sm:w-auto bg-sky-100 text-sky-800 px-4 py-2 rounded-md text-sm font-bold hover:bg-sky-200 transition-colors shadow-sm flex items-center justify-center gap-2">
                         <span>🔄</span> Actualitzar
                     </button>
                 </div>
             </div>
-            <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
-                            <tr class="bg-stone-50 text-stone-600 border-b border-stone-200">
-                                <th class="p-4 font-semibold text-sm">Data</th>
-                                <th class="p-4 font-semibold text-sm">Alumne/a</th>
-                                <th class="p-4 font-semibold text-sm">Parc</th>
-                                <th class="p-4 font-semibold text-sm">Puntuació</th>
-                                <th class="p-4 font-semibold text-sm">Proposta de Millora</th>
-                                <th class="p-4 font-semibold text-sm text-center">Accions</th>
+                            <tr class="bg-slate-100 text-slate-700 border-b border-slate-300">
+                                <th class="p-4 font-bold text-xs uppercase tracking-wider">Data / grup</th>
+                                <th class="p-4 font-bold text-xs uppercase tracking-wider">Parc / nota</th>
+                                <th class="p-4 font-bold text-xs uppercase tracking-wider">La súper idea (resum)</th>
+                                <th class="p-4 font-bold text-xs uppercase tracking-wider text-center">Accions</th>
                             </tr>
                         </thead>
-                        <tbody id="teacherTableBody" class="divide-y divide-stone-200">
-                            <tr><td colspan="6" class="p-8 text-center text-stone-500">Prem "Actualitzar dades" per carregar els resultats.</td></tr>
+                        <tbody id="teacherTableBody" class="divide-y divide-slate-200 text-sm">
+                            <tr><td colspan="4" class="p-8 text-center text-slate-500 italic">Prem "Actualitzar" per carregar els projectes.</td></tr>
                         </tbody>
                     </table>
                 </div>
@@ -210,108 +232,103 @@
     </main>
 
     <!-- Footer for Teacher Access -->
-    <footer class="mt-auto border-t border-stone-200 py-6 text-center text-sm text-stone-500 bg-stone-50">
-        <p>Eina educativa - Ajuntament de Castelldefels - <a href="#" onclick="window.unlockTeacherView(event)" class="hover:text-teal-600 font-medium transition-colors">🔒 Accés docent</a></p>
+    <footer class="mt-auto border-t border-slate-200 py-6 text-center text-sm text-slate-500 bg-white">
+        <p>Eina educativa - Ajuntament de Castelldefels (Primària) - <a href="#" onclick="window.unlockTeacherView(event)" class="hover:text-sky-600 font-bold transition-colors">🔒 Accés mestres</a></p>
     </footer>
 
     <!-- Password Modal -->
-    <div id="passwordModal" class="fixed inset-0 bg-stone-900 bg-opacity-50 hidden items-center justify-center z-50">
+    <div id="passwordModal" class="fixed inset-0 bg-slate-900 bg-opacity-60 hidden items-center justify-center z-50 backdrop-blur-sm">
         <div class="bg-white rounded-xl p-6 max-w-sm w-full shadow-2xl mx-4 relative">
-            <h3 class="font-bold text-lg mb-2 text-stone-800">Accés Docent</h3>
-            <p class="text-sm text-stone-600 mb-4">Introdueix la contrasenya per veure les respostes dels alumnes.</p>
-            <input type="password" id="teacherPassword" class="w-full border-stone-300 border rounded-md p-2 mb-2 focus:ring-teal-500 focus:border-teal-500" placeholder="Contrasenya...">
-            <p id="passwordError" class="text-rose-500 text-sm hidden mb-4">Contrasenya incorrecta.</p>
+            <h3 class="font-bold text-lg mb-2 text-slate-800">Accés docent</h3>
+            <p class="text-sm text-slate-600 mb-4">Introdueix la contrasenya per veure les feines.</p>
+            <input type="password" id="teacherPassword" class="w-full border-slate-300 border rounded-md p-2 mb-2 focus:ring-sky-500 focus:border-sky-500" placeholder="Contrasenya...">
+            <p id="passwordError" class="text-rose-500 text-sm hidden mb-4 font-medium">Contrasenya incorrecta.</p>
             <div class="flex justify-end gap-2 mt-4">
-                <button onclick="window.closePasswordModal()" class="px-4 py-2 text-stone-600 hover:bg-stone-100 rounded-md font-medium transition-colors">Cancel·lar</button>
-                <button onclick="window.checkPassword()" class="px-4 py-2 bg-teal-600 text-white rounded-md hover:bg-teal-700 font-medium transition-colors">Entrar</button>
+                <button onclick="window.closePasswordModal()" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-md font-medium transition-colors">Cancel·lar</button>
+                <button onclick="window.checkPassword()" class="px-4 py-2 bg-sky-600 text-white rounded-md hover:bg-sky-700 font-medium transition-colors">Entrar</button>
             </div>
         </div>
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div id="deleteConfirmModal" class="fixed inset-0 bg-stone-900 bg-opacity-50 hidden items-center justify-center z-50">
+    <div id="deleteConfirmModal" class="fixed inset-0 bg-slate-900 bg-opacity-60 hidden items-center justify-center z-50 backdrop-blur-sm">
         <div class="bg-white rounded-xl p-6 max-w-sm w-full shadow-2xl mx-4 relative">
-            <h3 class="font-bold text-lg mb-2 text-rose-700">Esborrar Auditoria</h3>
-            <p class="text-sm text-stone-600 mb-6">Estàs segur que vols esborrar aquesta resposta? Aquesta acció no es pot desfer.</p>
+            <h3 class="font-bold text-lg mb-2 text-rose-700">Esborrar feina</h3>
+            <p class="text-sm text-slate-600 mb-6">Segur que vols eliminar aquest treball? No es podrà recuperar.</p>
             <div class="flex justify-end gap-2">
-                <button onclick="window.closeDeleteModal()" class="px-4 py-2 text-stone-600 hover:bg-stone-100 rounded-md font-medium transition-colors">Cancel·lar</button>
-                <button onclick="window.executeDelete()" id="btnConfirmDelete" class="px-4 py-2 bg-rose-600 text-white rounded-md hover:bg-rose-700 font-medium transition-colors">Esborrar definitivament</button>
+                <button onclick="window.closeDeleteModal()" class="px-4 py-2 text-slate-600 hover:bg-slate-100 rounded-md font-medium transition-colors">Cancel·lar</button>
+                <button onclick="window.executeDelete()" id="btnConfirmDelete" class="px-4 py-2 bg-rose-600 text-white rounded-md hover:bg-rose-700 font-medium transition-colors">Sí, eliminar-ho</button>
             </div>
         </div>
     </div>
 
-    <!-- JavaScript Logic (UI & Data) -->
+    <!-- JavaScript Logic -->
     <script>
-        // Estructura de dades de l'Auditoria
+        // Estructura de dades SIMPLIFICADA per a Primària (Amb minúscules després dels dos punts i ítems visuals/sensorials)
         const auditData = {
-            mobilitat: {
-                title: "Accessibilitat Física i Mobilitat",
-                icon: "♿",
-                color: "amber",
-                items: [
-                    { id: "m1", label: "El camí per arribar al parc és pla o té rampes adequades.", checked: false },
-                    { id: "m2", label: "Els camins de dins del parc són amples per a una cadira de rodes.", checked: false },
-                    { id: "m3", label: "El terra de la zona de jocs és de cautxú, no de sorra gruixuda.", checked: false },
-                    { id: "m4", label: "Hi ha jocs als quals es pot jugar des del terra o des d'una cadira.", checked: false }
-                ]
-            },
             jocs: {
-                title: "Jocs i Mobiliari",
-                icon: "🛝",
-                color: "blue",
+                title: "Els jocs del parc",
+                shortTitle: "Els jocs",
+                icon: "🎢",
+                color: "orange",
                 items: [
-                    { id: "j1", label: "Hi ha almenys un gronxador tipus cistella/niu o amb respatller.", checked: false },
-                    { id: "j2", label: "Les estructures tenen escales fàcils i baranes segures.", checked: false },
-                    { id: "j3", label: "Hi ha panells per interactuar (amb les mans, música, miralls).", checked: false },
-                    { id: "j4", label: "Els jocs permeten que diversos infants juguin alhora junts.", checked: false }
+                    { id: "j1", label: "Gronxador: hi ha algun gronxador en forma de 'niu' o cistella gran on ens puguem estirar?", checked: false },
+                    { id: "j2", label: "Gronxador: hi ha algun seient que tingui respatller per a l'esquena i arnés (cinturó)?", checked: false },
+                    { id: "j3", label: "Tobogà: s'hi pot arribar pujant per una rampa (en comptes d'escales)?", checked: false },
+                    { id: "j4", label: "Tobogà: és prou ample perquè s'hi puguin tirar dues persones juntes?", checked: false },
+                    { id: "j5", label: "Sorral o aigua: hi ha alguna taula alta de sorra/aigua per jugar-hi des d'una cadira de rodes?", checked: false },
+                    { id: "j6", label: "Jocs per tocar i escoltar: hi ha pissarres amb relleu, timbals o jocs a la paret que facin soroll per jugar-hi sense necessitat de mirar?", checked: false }
                 ]
             },
-            serveis: {
-                title: "Serveis i Entorn",
+            entorn: {
+                title: "El terra i l'espai",
+                shortTitle: "L'entorn",
                 icon: "🌳",
-                color: "emerald",
+                color: "green",
                 items: [
-                    { id: "s1", label: "Hi ha papereres i fonts d'aigua a l'abast de tothom (alçada baixa).", checked: false },
-                    { id: "s2", label: "Hi ha zones amb ombra (arbres o tendals) i bona il·luminació.", checked: false },
-                    { id: "s3", label: "Hi ha bancs amb respatller per poder descansar còmodament.", checked: false },
-                    { id: "s4", label: "Hi ha elements que separen el parc del carrer (seguretat).", checked: false }
+                    { id: "e1", label: "El terra: hi ha camins llisos de goma (cautxú) o asfalt perquè les rodes hi passin fàcilment?", checked: false },
+                    { id: "e2", label: "Colors vius: els graons de les escales o els canvis de terra estan pintats amb colors forts perquè les persones que hi veuen poc no ensopeguin?", checked: false },
+                    { id: "e3", label: "Seguretat: el parc té una tanca per evitar que algú surti corrent cap als cotxes?", checked: false },
+                    { id: "e4", label: "Ombres: hi ha arbres grans o tendals que ens facin ombra quan fa molt de sol?", checked: false },
+                    { id: "e5", label: "Aigua: hi ha una font que funcioni i que tingui l'aigua a dues alçades diferents?", checked: false },
+                    { id: "e6", label: "Descans: hi ha bancs per asseure's a prop de la zona de joc, i tenen respatller per recolzar l'esquena?", checked: false }
                 ]
             },
-            cognitiu: {
-                title: "Comunicació i Aspectes Sensorials",
-                icon: "🧠",
+            necessitats: {
+                title: "Per a tots els nens i nenes",
+                shortTitle: "Tothom juga",
+                icon: "🤝",
                 color: "purple",
                 items: [
-                    { id: "c1", label: "Hi ha cartells que expliquen les normes amb dibuixos clars (pictogrames).", checked: false },
-                    { id: "c2", label: "Hi ha un espai tranquil o 'zona de calma' lluny de l'enrenou.", checked: false },
-                    { id: "c3", label: "Els colors dels jocs ajuden a diferenciar les parts (esglaons, vores).", checked: false },
-                    { id: "c4", label: "És fàcil orientar-se i saber on és la sortida.", checked: false }
+                    { id: "n1", label: "Cadira de rodes: un infant en cadira de rodes pot arribar sense ajuda a, com a mínim, 2 jocs diferents?", checked: false },
+                    { id: "n2", label: "Tranquil·litat: hi ha algun 'racó de la calma' o lloc tranquil apartat de l'enrenou per si algú es posa nerviós amb molt de soroll?", checked: false },
+                    { id: "n3", label: "Cartells clars: hi ha dibuixos clars (pictogrames) per explicar les normes o on són les coses perquè tothom ho entengui bé?", checked: false },
+                    { id: "n4", label: "Edats: hi ha zones separades perquè els més petits (bebès) i els més grans no es xoquin i es facin mal?", checked: false },
+                    { id: "n5", label: "Vistes: des dels bancs, es pot veure bé tot el parc sense racons amagats o foscos?", checked: false }
                 ]
             }
         };
 
         let radarChartInstance = null;
 
-        // Funció per canviar de pestanya
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             document.getElementById(`tab-${tabId}`).classList.add('active');
             
             document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('text-teal-700', 'border-teal-700', 'font-semibold');
-                btn.classList.add('text-stone-500', 'border-transparent', 'font-medium');
+                btn.classList.remove('text-sky-700', 'border-sky-700', 'font-semibold');
+                btn.classList.add('text-slate-500', 'border-transparent', 'font-medium');
             });
             
             const activeBtn = document.getElementById(`tab-btn-${tabId}`);
-            activeBtn.classList.remove('text-stone-500', 'border-transparent', 'font-medium');
-            activeBtn.classList.add('text-teal-700', 'border-teal-700', 'font-semibold');
+            activeBtn.classList.remove('text-slate-500', 'border-transparent', 'font-medium');
+            activeBtn.classList.add('text-sky-700', 'border-sky-700', 'font-semibold');
 
             if (tabId === 'resultats') {
                 updateResults();
             }
         }
 
-        // Generar el formulari d'auditoria
         function renderForm() {
             const container = document.getElementById('formContainer');
             container.innerHTML = '';
@@ -320,23 +337,23 @@
                 const category = auditData[categoryKey];
                 const bgClass = `bg-${category.color}-50`;
                 const borderClass = `border-${category.color}-200`;
-                const textClass = `text-${category.color}-800`;
+                const textClass = `text-${category.color}-900`;
                 const checkboxAccent = `text-${category.color}-600`;
 
                 const section = document.createElement('div');
-                section.className = `p-5 rounded-xl border ${borderClass} ${bgClass}`;
+                section.className = `p-5 rounded-2xl border ${borderClass} ${bgClass}`;
                 
-                let html = `<h3 class="font-bold ${textClass} text-lg mb-4 flex items-center gap-2"><span>${category.icon}</span> ${category.title}</h3><div class="space-y-3">`;
+                let html = `<h3 class="font-bold ${textClass} text-xl mb-4 flex items-center gap-2"><span>${category.icon}</span> ${category.title}</h3><div class="space-y-3">`;
 
                 category.items.forEach((item, index) => {
                     const checkedStr = item.checked ? 'checked' : '';
                     html += `
-                        <label class="flex items-start gap-3 p-3 bg-white rounded-lg border border-${category.color}-100 cursor-pointer hover:shadow-sm transition-shadow">
+                        <label class="flex items-center gap-4 p-4 bg-white rounded-xl border border-${category.color}-100 cursor-pointer hover:shadow-md transition-shadow">
                             <input type="checkbox" 
-                                class="mt-1 w-5 h-5 rounded border-stone-300 ${checkboxAccent} focus:ring-${category.color}-500" 
+                                class="w-6 h-6 rounded border-slate-300 ${checkboxAccent} focus:ring-${category.color}-500 shrink-0" 
                                 onchange="updateItem('${categoryKey}', ${index}, this.checked)"
                                 ${checkedStr}>
-                            <span class="text-stone-700 text-sm md:text-base">${item.label}</span>
+                            <span class="text-slate-800 text-base font-medium">${item.label}</span>
                         </label>
                     `;
                 });
@@ -347,10 +364,8 @@
             }
         }
 
-        // Actualitzar l'estat d'un element
         window.updateItem = function(categoryKey, index, isChecked) {
             auditData[categoryKey].items[index].checked = isChecked;
-            // Actualitzem l'índex global en temps real
             let total = 0, checked = 0;
             for (const cat in auditData) {
                 total += auditData[cat].items.length;
@@ -359,17 +374,15 @@
             document.getElementById('globalScoreHeader').innerText = Math.round((checked / total) * 100);
         };
 
-        // Calcular i mostrar resultats
         window.updateResults = function() {
             const labels = [];
             const dataScores = [];
             let totalPossible = 0;
             let totalChecked = 0;
-            let weakestCat = { name: '-', score: 100 };
 
             for (const key in auditData) {
                 const cat = auditData[key];
-                labels.push(cat.title);
+                labels.push(cat.shortTitle);
                 
                 const catTotal = cat.items.length;
                 const catChecked = cat.items.filter(i => i.checked).length;
@@ -378,36 +391,34 @@
                 dataScores.push(catPercentage);
                 totalPossible += catTotal;
                 totalChecked += catChecked;
-
-                if (catPercentage < weakestCat.score) {
-                    weakestCat = { name: cat.title, score: catPercentage };
-                }
             }
 
+            // A primària posem nota sobre 10
+            const scoreOver10 = ((totalChecked / totalPossible) * 10).toFixed(1);
             const globalPercentage = Math.round((totalChecked / totalPossible) * 100);
-            document.getElementById('globalScoreDisplay').innerText = globalPercentage + '%';
-            document.getElementById('globalScoreHeader').innerText = globalPercentage;
-            document.getElementById('weakestCategoryDisplay').innerText = weakestCat.name;
-
-            // Dibuixar gràfic
-            const ctx = document.getElementById('radarChart').getContext('2d');
             
-            if (radarChartInstance) {
-                radarChartInstance.destroy();
-            }
+            document.getElementById('globalScoreDisplay').innerText = scoreOver10 + '/10';
+            document.getElementById('globalScoreHeader').innerText = globalPercentage;
+
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            if (radarChartInstance) radarChartInstance.destroy();
 
             radarChartInstance = new Chart(ctx, {
                 type: 'radar',
                 data: {
                     labels: labels,
                     datasets: [{
-                        label: 'Puntuació per Categoria (%)',
+                        label: 'Resultat (%)',
                         data: dataScores,
-                        backgroundColor: 'rgba(13, 148, 136, 0.2)', // teal-600 amb opacitat
-                        borderColor: 'rgba(13, 148, 136, 1)',
-                        pointBackgroundColor: 'rgba(13, 148, 136, 1)',
-                        borderWidth: 2,
-                        pointRadius: 4
+                        backgroundColor: 'rgba(14, 165, 233, 0.3)', // sky-500 amb transparència
+                        borderColor: 'rgba(2, 132, 199, 1)', // sky-600
+                        pointBackgroundColor: 'rgba(2, 132, 199, 1)',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: 'rgba(2, 132, 199, 1)',
+                        borderWidth: 3,
+                        pointRadius: 5,
+                        pointHoverRadius: 7
                     }]
                 },
                 options: {
@@ -417,18 +428,28 @@
                         r: {
                             angleLines: { color: 'rgba(0, 0, 0, 0.1)' },
                             grid: { color: 'rgba(0, 0, 0, 0.1)' },
-                            pointLabels: { font: { size: 12, family: 'sans-serif' }, color: '#44403c' },
+                            pointLabels: { 
+                                font: { size: 14, family: 'sans-serif', weight: 'bold' }, 
+                                color: '#334155' // slate-700
+                            },
                             ticks: { min: 0, max: 100, stepSize: 25, display: false }
                         }
                     },
-                    plugins: {
-                        legend: { display: false }
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return ' ' + context.raw + '% aconseguit';
+                                }
+                            }
+                        }
                     }
                 }
             });
         };
 
-        // Lògica del Panell Docent
+        // Lògica Docent
         window.unlockTeacherView = function(e) {
             e.preventDefault();
             document.getElementById('passwordModal').classList.remove('hidden');
@@ -445,7 +466,6 @@
 
         window.checkPassword = function() {
             const pwd = document.getElementById('teacherPassword').value;
-            // Contrasenya per a l'escola de Castelldefels
             if (pwd === "castelldefels2026") {
                 window.closePasswordModal();
                 document.getElementById('tab-btn-professor').classList.remove('hidden');
@@ -459,19 +479,17 @@
         window.renderTeacherData = function(dataList) {
             const tbody = document.getElementById('teacherTableBody');
             if(dataList.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-stone-500">Encara no hi ha cap auditoria desada al núvol.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-slate-500 italic">No hi ha feines entregades encara.</td></tr>';
                 return;
             }
             
             tbody.innerHTML = '';
-            // Ordenar de més recent a més antiga
             dataList.sort((a,b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0)).reverse();
 
             dataList.forEach(item => {
                 const tr = document.createElement('tr');
-                tr.className = "hover:bg-stone-50 transition-colors";
+                tr.className = "hover:bg-slate-50 transition-colors";
                 
-                // Calcular la puntuació global
                 let totalPossible = 0; let totalChecked = 0;
                 if(item.auditData) {
                     for (const key in item.auditData) {
@@ -482,26 +500,31 @@
                         }
                     }
                 }
-                const score = totalPossible > 0 ? Math.round((totalChecked/totalPossible)*100) : 0;
-                let scoreColor = score < 30 ? 'text-rose-700 bg-rose-100' : (score < 70 ? 'text-amber-700 bg-amber-100' : 'text-teal-700 bg-teal-100');
+                const score = totalPossible > 0 ? ((totalChecked/totalPossible)*10).toFixed(1) : "0.0";
+                const numScore = parseFloat(score);
+                let scoreColor = numScore < 4 ? 'text-rose-700 bg-rose-100' : (numScore < 7 ? 'text-orange-700 bg-orange-100' : 'text-green-700 bg-green-100');
 
                 const dateStr = item.timestamp ? new Date(item.timestamp).toLocaleString('ca-ES', {dateStyle: 'short', timeStyle: 'short'}) : 'Sense data';
-                const studentNameStr = (item.studentName || item.studentSurname) ? `${item.studentName || ''} ${item.studentSurname || ''}`.trim() : '<span class="italic text-stone-400">Anònim</span>';
-                const schoolStr = item.studentSchool || '<span class="italic text-stone-400">No indicat</span>';
-                const park = item.parkName || '<span class="text-stone-400 italic">Sense nom</span>';
-                const proposal = item.proposal || '<span class="text-stone-400 italic">Sense proposta</span>';
+                const studentNameStr = item.studentName || '<span class="italic text-slate-400">Grup anònim</span>';
+                const schoolStr = item.studentSchool || '<span class="italic text-slate-400">Escola no indicada</span>';
+                const park = item.parkName || '<span class="text-slate-400 italic">Parc no indicat</span>';
+                const solucio = item.solucio || '<span class="text-slate-400 italic">No han escrit cap idea</span>';
 
                 tr.innerHTML = `
-                    <td class="p-4 text-sm text-stone-600 whitespace-nowrap">${dateStr}</td>
-                    <td class="p-4 text-sm text-stone-800">
-                        <div class="font-bold">${studentNameStr}</div>
-                        <div class="text-xs text-stone-500">${schoolStr}</div>
+                    <td class="p-4 align-top">
+                        <div class="text-xs text-slate-500 mb-1">${dateStr}</div>
+                        <div class="font-bold text-slate-800 text-sm">${studentNameStr}</div>
+                        <div class="text-xs text-sky-600 font-medium">${schoolStr}</div>
                     </td>
-                    <td class="p-4 font-medium text-stone-800">${park}</td>
-                    <td class="p-4 text-sm"><span class="px-3 py-1 rounded-full font-bold ${scoreColor}">${score}%</span></td>
-                    <td class="p-4 text-sm text-stone-600 max-w-xs sm:max-w-md md:max-w-lg truncate" title="${proposal.replace(/"/g, '&quot;')}">${proposal}</td>
-                    <td class="p-4 text-center">
-                        <button onclick="window.confirmDelete('${item.id}')" class="text-stone-400 hover:text-rose-600 hover:bg-rose-50 p-2 rounded-md transition-all" title="Esborrar">
+                    <td class="p-4 align-top">
+                        <div class="font-medium text-slate-800 text-sm mb-2">${park}</div>
+                        <span class="px-2 py-1 rounded text-xs font-bold border ${scoreColor}">Nota: ${score}/10</span>
+                    </td>
+                    <td class="p-4 align-top">
+                        <div class="text-sm text-slate-700 line-clamp-3 bg-white p-2 border border-slate-100 rounded" title="${solucio.replace(/"/g, '&quot;')}">${solucio}</div>
+                    </td>
+                    <td class="p-4 align-top text-center">
+                        <button onclick="window.confirmDelete('${item.id}')" class="text-slate-400 hover:text-rose-600 hover:bg-rose-50 p-2 rounded-md transition-all" title="Esborrar feina">
                             🗑️
                         </button>
                     </td>
@@ -510,13 +533,11 @@
             });
         };
 
-        // Initialize App UI
         window.onload = () => {
             renderForm();
             updateResults(); 
         };
 
-        // Exposar funcions i dades globals per al mòdul del núvol
         window.getAuditData = () => auditData;
         window.setAuditData = (newData) => {
             for (const key in newData) {
@@ -525,7 +546,6 @@
                 }
             }
         };
-
     </script>
 
     <!-- Connexió al Núvol (Firebase) -->
@@ -536,14 +556,13 @@
 
         let firebaseConfig = {};
         let appId = 'auditoria-parcs'; 
+        const collectionName = 'audits_primaria'; // Col·lecció diferent per primària!
 
-        // Comprovem l'entorn: Si estem aquí dins de l'assistent s'utilitza la prova, 
-        // a GitHub utilitzarà la TEVA configuració definitiva de baix.
         if (typeof __firebase_config !== 'undefined') {
             firebaseConfig = JSON.parse(__firebase_config);
             if (typeof __app_id !== 'undefined') appId = __app_id;
         } else {
-            // LES TEVES CLAUS DEFINITIVES PER A GITHUB
+            // Claus per defecte (simulades per l'entorn)
             firebaseConfig = {
                 apiKey: "AIzaSyD9jHIEw4rZ-KEpixvMO894f64drNXfDS0",
                 authDomain: "auditoria-inclusiva-parcs-prim.firebaseapp.com",
@@ -557,10 +576,8 @@
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
-
         let currentUser = null;
 
-        // Inicialitzar Autenticació
         const initAuth = async () => {
             try {
                 if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
@@ -576,28 +593,27 @@
 
         initAuth();
 
-        // Escoltar canvis d'usuari i carregar dades si n'hi ha
         onAuthStateChanged(auth, async (user) => {
             currentUser = user;
             if (user) {
-                document.getElementById('cloudStatus').innerText = "☁️ Connectat";
+                document.getElementById('cloudStatus').innerText = "☁️ Connectat (Primària)";
                 loadFromCloud();
             }
         });
 
-        // Funció per carregar el progrés d'un alumne individual
         window.loadFromCloud = async () => {
             if (!currentUser) return;
             try {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'audits', currentUser.uid);
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', collectionName, currentUser.uid);
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     const data = docSnap.data();
                     if (data.studentName) document.getElementById('studentNameInput').value = data.studentName;
-                    if (data.studentSurname) document.getElementById('studentSurnameInput').value = data.studentSurname;
                     if (data.studentSchool) document.getElementById('studentSchoolInput').value = data.studentSchool;
                     if (data.parkName) document.getElementById('parkNameInput').value = data.parkName;
-                    if (data.proposal) document.getElementById('propostaMillora').value = data.proposal;
+                    
+                    if (data.diagnosi) document.getElementById('diagnosiInput').value = data.diagnosi;
+                    if (data.solucio) document.getElementById('solucioInput').value = data.solucio;
                     
                     if (data.auditData) {
                         window.setAuditData(data.auditData);
@@ -610,7 +626,6 @@
             }
         };
 
-        // Funció per desar el progrés de l'alumne
         window.saveToCloud = async () => {
             const btn = document.getElementById('btnSaveCloud');
             const status = document.getElementById('cloudStatus');
@@ -623,49 +638,42 @@
             }
 
             const textOriginal = btn.innerHTML;
-            btn.innerHTML = "<span>⏳</span> Desant...";
+            btn.innerHTML = "<span>⏳</span> Enviant...";
             status.innerText = "☁️ Sincronitzant...";
 
-            const studentName = document.getElementById('studentNameInput').value;
-            const studentSurname = document.getElementById('studentSurnameInput').value;
-            const studentSchool = document.getElementById('studentSchoolInput').value;
-            const parkName = document.getElementById('parkNameInput').value;
-            const proposal = document.getElementById('propostaMillora').value;
-
             const dataToSave = {
-                studentName: studentName,
-                studentSurname: studentSurname,
-                studentSchool: studentSchool,
-                parkName: parkName,
-                proposal: proposal,
+                studentName: document.getElementById('studentNameInput').value,
+                studentSchool: document.getElementById('studentSchoolInput').value,
+                parkName: document.getElementById('parkNameInput').value,
+                diagnosi: document.getElementById('diagnosiInput').value,
+                solucio: document.getElementById('solucioInput').value,
                 auditData: window.getAuditData(),
                 timestamp: new Date().toISOString()
             };
 
             try {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'audits', currentUser.uid);
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', collectionName, currentUser.uid);
                 await setDoc(docRef, dataToSave);
-                btn.innerHTML = "<span>✅</span> Dades desades correctament!";
+                btn.innerHTML = "<span>✅</span> Idea enviada a l'ajuntament!";
                 status.innerText = "☁️ Sincronitzat";
                 setTimeout(() => { btn.innerHTML = textOriginal; }, 3000);
             } catch (error) {
                 console.error("Error desant dades:", error);
-                btn.innerHTML = "<span>❌</span> Error en desar";
+                btn.innerHTML = "<span>❌</span> Error en enviar";
                 status.innerText = "⚠️ Error del núvol";
                 setTimeout(() => { btn.innerHTML = textOriginal; }, 3000);
             }
         };
 
-        window.allAuditsData = []; // Guardem les dades globalment per poder filtrar
+        window.allAuditsData = [];
 
-        // Funció per carregar Totes les auditories (Només Professorat)
         window.loadAllAudits = async () => {
             if (!currentUser) return;
             const tbody = document.getElementById('teacherTableBody');
-            tbody.innerHTML = '<tr><td colspan="6" class="p-8 text-center text-stone-500">Carregant dades des del núvol... ⏳</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-slate-500 italic">Carregant treballs des del núvol... ⏳</td></tr>';
             
             try {
-                const auditsRef = collection(db, 'artifacts', appId, 'public', 'data', 'audits');
+                const auditsRef = collection(db, 'artifacts', appId, 'public', 'data', collectionName);
                 const querySnapshot = await getDocs(auditsRef);
                 const results = [];
                 const schools = new Set();
@@ -680,10 +688,9 @@
                 
                 window.allAuditsData = results;
 
-                // Actualitzar el desplegable de filtres
                 const filterSelect = document.getElementById('schoolFilter');
                 const currentValue = filterSelect.value;
-                filterSelect.innerHTML = '<option value="all">Tots els centres</option>';
+                filterSelect.innerHTML = '<option value="all">Totes les escoles</option>';
                 
                 Array.from(schools).sort().forEach(school => {
                     const option = document.createElement('option');
@@ -692,21 +699,16 @@
                     filterSelect.appendChild(option);
                 });
                 
-                // Mantenir la selecció prèvia si encara existeix
-                if (schools.has(currentValue)) {
-                    filterSelect.value = currentValue;
-                } else {
-                    filterSelect.value = 'all';
-                }
+                if (schools.has(currentValue)) filterSelect.value = currentValue;
+                else filterSelect.value = 'all';
 
-                window.filterAudits(); // Renderitzem aplicant el filtre
+                window.filterAudits();
             } catch (error) {
                 console.error("Error carregant totes les dades:", error);
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-rose-500">❌ Error de connexió al descarregar les dades. Revisa que les regles de Firestore estiguin configurades correctament.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-rose-500 font-bold">❌ Error de connexió amb Firebase.</td></tr>`;
             }
         };
 
-        // Funció per aplicar el filtre
         window.filterAudits = () => {
             const filterValue = document.getElementById('schoolFilter').value;
             let filteredData = window.allAuditsData;
@@ -716,12 +718,9 @@
                     item.studentSchool && item.studentSchool.trim() === filterValue
                 );
             }
-            
-            // Passem una còpia de l'array perquè el renderTeacherData l'ordena internament
             window.renderTeacherData([...filteredData]);
         };
 
-        // Lògica d'esborrat des del panell docent
         let deleteIdTarget = null;
 
         window.confirmDelete = (id) => {
@@ -738,27 +737,22 @@
 
         window.executeDelete = async () => {
             if (!deleteIdTarget || !currentUser) return;
-            
             const btn = document.getElementById('btnConfirmDelete');
             const originalText = btn.innerHTML;
-            btn.innerHTML = "Esborrant...";
+            btn.innerHTML = "Eliminant...";
             btn.disabled = true;
 
             try {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'audits', deleteIdTarget);
+                const docRef = doc(db, 'artifacts', appId, 'public', 'data', collectionName, deleteIdTarget);
                 await deleteDoc(docRef);
                 window.closeDeleteModal();
-                window.loadAllAudits(); // Recarregar la taula per treure el document esborrat
+                window.loadAllAudits();
             } catch (error) {
                 console.error("Error esborrant document:", error);
                 btn.innerHTML = "Error!";
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                }, 2000);
+                setTimeout(() => { btn.innerHTML = originalText; btn.disabled = false; }, 2000);
                 return;
             }
-            
             btn.innerHTML = originalText;
             btn.disabled = false;
         };
